@@ -999,8 +999,12 @@
   .pipeline-feature-grid p, .directory-heading p, .pipeline-cohorts p:not(.label) { color: var(--muted); font-size: .94rem; line-height: 1.62; }
   .directory-heading { display: flex; align-items: end; flex-wrap: wrap; gap: 8px 24px; }
   .directory-heading h2 { margin-bottom: 5px; }
-  .directory-heading .map-trigger { font: inherit; font-size: .86rem; background: transparent; border: 0; color: var(--green); cursor: pointer; white-space: nowrap; padding: 6px 0; }
-  .directory-heading .map-trigger:hover { text-decoration: underline; }
+  .directory-heading .map-trigger {
+    font: inherit; font-size: .86rem; background: transparent; border: 0;
+    color: var(--green); cursor: pointer; white-space: nowrap; min-height: 44px; padding: 6px 0;
+    text-decoration: underline; text-decoration-color: #235d4366; text-underline-offset: 4px;
+  }
+  .directory-heading .map-trigger:hover { text-decoration-color: currentColor; }
   .pipeline-cohorts { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
   .pipeline-cohorts > section { border: 1px solid var(--line); border-radius: 10px; padding: 22px; background: #fff; }
   .pipeline-cohorts h2 { margin: 8px 0; }
@@ -1032,7 +1036,21 @@
   body[data-page="company"] .header .brand img { filter: invert(1); mix-blend-mode: screen; }
   body[data-page="company"] .header nav a { color: #deebe5; }
   body[data-page="company"] .header nav a:is(:hover, [aria-current]) { color: #b4e2d2; }
-  body[data-page="company"] .language-switch { color: #e6f7f0; background: #132b28; border-color: #436157; }
+  .header .language-switch {
+    display: inline-grid; place-items: center; min-width: 57px; min-height: 42px;
+    padding: 0; border: 0; background: transparent;
+    color: var(--green); font-size: .75rem; font-weight: 600;
+  }
+  .language-switch > span {
+    display: inline-grid; place-items: center; min-width: 42px; min-height: 27px;
+    padding-inline: 7px; border: 1px solid var(--line); border-radius: 99px;
+  }
+  .language-switch:hover > span { background: var(--mist); }
+  body:is([data-page="home"], [data-page="company"]) .header .language-switch {
+    color: #d7e8e2; background: transparent;
+  }
+  body:is([data-page="home"], [data-page="company"]) .language-switch > span { border-color: #436157; }
+  body:is([data-page="home"], [data-page="company"]) .language-switch:hover > span { background: #25483d; }
   body[data-page="company"] .header :is(a, button):focus-visible,
   .company-contact-link:focus-visible { outline-color: #a2fbd1; }
   .header {
@@ -1207,7 +1225,7 @@
               <h2 data-zh="研究项目">Our projects</h2>
               <p data-zh="了解各项研究的方向和进展。">Explore the research underway across our pipeline.</p>
             </div>
-            <button class="map-trigger" type="button" data-open-map aria-haspopup="dialog"><span data-zh="世界地图">World map</span> <span aria-hidden="true">↗</span></button>
+            <button class="map-trigger" type="button" data-open-map aria-haspopup="dialog" data-zh="世界地图">World map</button>
           </div>
         </div>
         <div class="pipeline-features">
