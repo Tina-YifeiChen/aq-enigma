@@ -964,10 +964,12 @@
     .company-people { grid-template-columns: 1fr; }
   }
   #projects:not([hidden]) {
-    display: grid; grid-template-columns: minmax(12rem, .29fr) minmax(0, 1fr);
-    align-items: start; gap: clamp(28px, 5vw, 76px);
+    --page: min(1040px, calc(100% - clamp(32px, 8vw, 104px)));
+    display: grid; grid-template-columns: minmax(11.5rem, .27fr) minmax(0, 1fr);
+    align-items: start; gap: clamp(28px, 4vw, 60px);
   }
   #projects > [data-subview] { min-width: 0; }
+  .pipeline-menu-toggle { display: none; }
   .pipeline-links {
     display: grid; align-content: start; gap: 0;
     border-inline-end: 1px solid var(--line); padding-inline-end: 20px;
@@ -978,21 +980,38 @@
   .pipeline-links a {
     display: flex; align-items: center; min-height: 42px;
     border-inline-start: 2px solid transparent; padding: 6px 8px;
-    color: var(--muted); line-height: 1.35;
+    color: var(--muted); font-size: .9rem; line-height: 1.35;
   }
   .pipeline-links a:is(:hover, [aria-current="page"]) { color: var(--green); background: #edf1eb; }
-  .pipeline-links a[aria-current="page"] { border-inline-start-color: var(--accent); }
-  #projects .interior-heading h1 { font-size: clamp(1.95rem, 3vw, 2.7rem); }
-  #projects .interior-heading > p { max-width: 66ch; }
+  .pipeline-links a[aria-current="page"] { border-inline-start-color: var(--accent); text-decoration: none; }
+  #projects .interior-heading { gap: 12px; margin-bottom: clamp(23px, 3vw, 34px); }
+  #projects .interior-heading h1 { font-size: clamp(1.6rem, 2.45vw, 2rem); line-height: 1.16; letter-spacing: -.035em; }
+  #projects .interior-heading > p { max-width: 63ch; line-height: 1.7; }
+  #projects h2 { font-size: clamp(1.15rem, 1.6vw, 1.32rem); letter-spacing: -.02em; }
+  .pipeline-detail { max-width: 46rem; }
   @media (min-width: 761px) and (min-height: 540px) {
-    .pipeline-links { position: sticky; top: 102px; }
+    .pipeline-navigation { position: sticky; top: 102px; }
   }
   @media (max-width: 760px) {
-    #projects:not([hidden]) { grid-template-columns: minmax(0, 1fr); gap: 25px; }
-    .pipeline-links { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 10px; border-inline-end: 0; padding: 0 0 12px; border-bottom: 1px solid var(--line); }
-    .pipeline-links p, .pipeline-links a:first-of-type { grid-column: 1 / -1; }
-    .pipeline-links p { padding: 0 0 6px; }
-    .pipeline-links a { font-size: .86rem; }
+    #projects:not([hidden]) { grid-template-columns: minmax(0, 1fr); gap: 19px; padding-top: 14px; }
+    .pipeline-navigation { border-bottom: 1px solid var(--line); }
+    .pipeline-menu-toggle {
+      display: flex; width: 100%; min-height: 44px; align-items: center; justify-content: space-between;
+      padding: 6px 6px 6px 0; border: 0; color: var(--green); background: transparent;
+      font: inherit; font-size: .9rem; font-weight: 650; cursor: pointer;
+    }
+    .pipeline-menu-toggle::after {
+      content: ""; width: 7px; height: 7px; border: solid currentColor;
+      border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg);
+    }
+    .pipeline-menu-toggle[aria-expanded="true"]::after { transform: translateY(2px) rotate(225deg); }
+    .pipeline-menu-toggle[aria-expanded="false"] + .pipeline-links { display: none; }
+    .pipeline-links {
+      grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 10px;
+      border-inline-end: 0; padding: 0 0 10px;
+    }
+    .pipeline-links p { display: none; }
+    .pipeline-links a:first-of-type { grid-column: 1 / -1; }
   }
   .pipeline-features { margin-top: clamp(28px, 5vw, 58px); }
   .pipeline-feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 20px; }
@@ -1008,16 +1027,16 @@
   }
   .directory-heading .map-trigger:hover { text-decoration-color: currentColor; }
   .pipeline-cohorts { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
-  .pipeline-cohorts > section { border: 1px solid var(--line); border-radius: 10px; padding: 22px; background: #fff; }
+  .pipeline-cohorts > section { border-top: 1px solid var(--line); padding-top: 14px; }
   .pipeline-cohorts h2 { margin: 8px 0; }
   .pipeline-notes { max-width: 52rem; margin: 0 0 var(--content-gap); }
   .pipeline-notes > div {
-    display: grid; grid-template-columns: minmax(9rem, .9fr) minmax(0, 3fr);
-    gap: 8px 24px; padding: 16px 0; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: minmax(8rem, .8fr) minmax(0, 3fr);
+    gap: 6px 24px; padding: 13px 0; border-top: 1px solid var(--line);
   }
   .pipeline-notes > div:last-child { border-bottom: 1px solid var(--line); }
-  .pipeline-notes dt { font-weight: 650; }
-  .pipeline-notes dd { margin: 0; color: var(--muted); }
+  .pipeline-notes dt { font-size: .87rem; font-weight: 650; }
+  .pipeline-notes dd { margin: 0; color: var(--ink); font-size: .95rem; line-height: 1.65; }
   @media (max-width: 540px) {
     .pipeline-notes > div { grid-template-columns: 1fr; gap: 4px; padding-block: 12px; }
   }
@@ -1152,8 +1171,8 @@
   <div class="masthead" data-page-view="home">
     <section class="wrap hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <h1 id="hero-title" data-zh="在没有已知生物标志物的情况下发现疾病信号">Disclose disease signals without known biomarkers</h1>
-        <p data-zh="AQ Biotech 通过 AQ Enigma 平台提供生物标志物发现服务。我们利用噬菌体生物传感器研究尿液、血清和唾液样本，寻找可能与疾病相关的早期信号。">AQ Enigma is AQ Biotech’s service delivery platform for biomarker discovery. We use phage-biosensors to study urine, serum and saliva for potential early signals of disease.</p>
+        <h1 id="hero-title" data-zh="在没有已知生物标志物的情况下发现疾病信号">Discover disease signals without known biomarkers</h1>
+        <p data-zh="AQ Enigma 是 AQ Biotech 提供生物标志物发现和药物研究服务的平台。我们利用噬菌体生物传感器研究尿液、血清和唾液样本，寻找可能与疾病相关的早期信号。">AQ Enigma is AQ Biotech’s service delivery platform for biomarker discovery and pharmaceutical research. We use phage-biosensors to study urine, serum and saliva for potential early signals of disease.</p>
         <div class="hero-actions">
           <a class="button" href="#/contact"><span data-zh="与我们合作">Partner with us</span></a>
           <a class="hero-projects projects-link" href="#/pipeline"><span data-zh="查看研究项目">Explore our projects</span><span aria-hidden="true">→</span></a>
@@ -1176,8 +1195,8 @@
   <section class="wrap section services interior-page" id="services" data-page-view="services" hidden>
     <header class="interior-heading">
       <p class="label" data-zh="AQ Biotech 服务">AQ Biotech services</p>
-      <h1 data-zh="生物标志物发现服务">Biomarker Discovery as a Service</h1>
-      <p data-zh="AQ Enigma 是 AQ Biotech 开展生物标志物发现服务和研究的平台。我们利用噬菌体生物传感器的信号比较样本，重点研究肿瘤、神经退行性疾病和感染性疾病。">AQ Enigma is AQ Biotech’s platform for delivering biomarker discovery services and conducting research. We use phage biosensor signals to compare samples, with a focus on oncology, neurodegenerative disease and infectious disease.</p>
+      <h1 data-zh="生物标志物发现与结构验证服务">Biomarker Discovery &amp; Structural Validation Services</h1>
+      <p data-zh="AQ Enigma 是 AQ Biotech 提供生物标志物发现和药物研究服务的平台。我们利用噬菌体生物传感器信号比较样本，重点关注肿瘤、神经退行性疾病、感染性疾病以及蛋白质结构变化。">AQ Enigma is AQ Biotech’s service delivery platform for biomarker discovery and for conducting pharmaceutical research. We use phage-biosensor signals to compare samples, with a focus on oncology, neurodegenerative disease, infectious disease and changes in protein structures.</p>
     </header>
     <table class="service-compare interior-content" aria-label="Compare collaboration options" data-zh-label="比较合作方式">
       <colgroup><col class="service-option"><col class="service-audience"><col></colgroup>
@@ -1190,31 +1209,37 @@
       </thead>
       <tbody>
         <tr>
+          <th scope="row" data-zh="生物标志物发现与新靶点探索">Biomarker Discovery and De Novo Target</th>
+          <td data-zh="诊断与制药研发团队">Diagnostic and Pharma R&amp;D</td>
+          <td data-zh="在没有预先确定靶点的情况下，从信息丰富且复杂的临床队列中能发现哪些未知的生物标志物？">Which unknown biomarkers emerge from rich and complex clinical cohorts without prior target knowledge?</td>
+        </tr>
+        <tr>
+          <th scope="row" data-zh="蛋白质结构验证">Protein Structural Validation</th>
+          <td data-zh="蛋白质研究、AI 药物发现及制药企业研发团队">Protein research, AI drug discovery, companies Pharma R&amp;D</td>
+          <td data-zh="开展蛋白质和结构分析，研究计算设计的蛋白质或靶点在实际溶液中的表现。">Protein analysis, how does a computationally designed protein or target behave in real solution, and structural analysis.</td>
+        </tr>
+        <tr>
           <th scope="row" data-zh="联合实验">Joint experiments</th>
-          <td data-zh="研究人员与课题组">Investigators and research groups</td>
-          <td>
-            <p data-zh="同一种蛋白质在结合铁和未结合铁时，能否测到不同信号？适合从一个具体问题开始探索。">Can we detect different signals from the same protein with and without iron? Start with one focused question.</p>
-            <p class="comparison-note" data-zh="可讨论收益共享。">Revenue sharing is open for discussion.</p>
-          </td>
+          <td data-zh="临床医生、学术研究人员及转化研究团队">Clinicians, academic investigators &amp; translational research teams</td>
+          <td data-zh="靶蛋白在发生配体结合、修饰或突变时，构象如何变化？">How does a target protein change conformation upon ligand binding, modification, or mutation?</td>
         </tr>
         <tr>
           <th scope="row" data-zh="专题研究">Focused studies</th>
-          <td data-zh="制药与诊断研发团队">Pharma and diagnostics teams</td>
-          <td data-zh="已有明确比较对象，例如病例与对照，或尿液与血清。想知道传感器读数在这两组之间有何差异？">With a defined comparison such as cases versus controls or urine versus serum, how do the sensor readings differ?</td>
-        </tr>
-        <tr>
-          <th scope="row" data-zh="候选标志物发现">Candidate discovery</th>
-          <td data-zh="制药与诊断研发团队">Pharma and diagnostics teams</td>
-          <td data-zh="研究方向已明确，候选标志物还不确定。哪些信号值得进一步验证？">With a defined research area and no established candidate, which signals are worth testing further?</td>
+          <td data-zh="诊断与制药临床研发团队">Diagnostics and Pharma clinical R&amp;D teams</td>
+          <td data-zh="直接使用未经处理的尿液、血清或唾液样本，能以多高的准确性对预先定义的队列进行分层，例如区分治疗应答者与无应答者、健康者与患病者？">How accurately can we stratify defined patient cohorts (e.g., responders vs. non-responders, healthy vs. disease) directly from unprocessed urine, serum, or saliva?</td>
         </tr>
       </tbody>
     </table>
   </section>
 <section class="wrap section interior-page" id="projects" data-page-view="projects" hidden>
-    <nav class="pipeline-links" aria-labelledby="pipeline-directory-label" data-route-nav>
-      <p id="pipeline-directory-label">Pipeline+</p>
-      <a href="#/pipeline" data-zh="总览">Overview</a>
-      <a href="#/pipeline/kidney-diseases" data-zh="肾脏疾病">Kidney diseases</a>
+    <div class="pipeline-navigation">
+      <button class="pipeline-menu-toggle" type="button" aria-expanded="false" aria-controls="pipeline-links">
+        <span data-zh="切换项目">Browse projects</span>
+      </button>
+      <nav class="pipeline-links" id="pipeline-links" aria-labelledby="pipeline-directory-label" data-route-nav>
+        <p id="pipeline-directory-label">Pipeline+</p>
+        <a href="#/pipeline" data-zh="总览">Overview</a>
+        <a href="#/pipeline/kidney-diseases" data-zh="肾脏疾病">Kidney diseases</a>
       <a href="#/pipeline/parkinsons-disease" data-zh="帕金森病">Parkinson’s disease</a>
       <a href="#/pipeline/lung-cancer" data-zh="肺癌">Lung cancer</a>
       <a href="#/pipeline/prostate-cancer" data-zh="前列腺癌">Prostate cancer</a>
@@ -1222,7 +1247,8 @@
       <a href="#/pipeline/organ-transplantation" data-zh="器官移植">Organ transplantation</a>
       <a href="#/pipeline/tuberculosis" data-zh="结核病">Tuberculosis</a>
       <a href="#/pipeline/sepsis" data-zh="脓毒症">Sepsis</a>
-    </nav>
+      </nav>
+    </div>
       <div data-subview="overview" hidden>
         <header class="interior-heading">
           <h1 data-zh="用于疾病研究的噬菌体生物传感器">Phage biosensors for disease research</h1>
@@ -1247,7 +1273,7 @@
       </div>
       <article class="pipeline-detail" data-subview="kidney-diseases" hidden>
         <header class="interior-heading">
-          <h1 data-zh="肾脏疾病">Kidney diseases</h1>
+          <h1 tabindex="-1" data-zh="肾脏疾病">Kidney diseases</h1>
           <p data-zh="南京项目研究与肾脏疾病相关的生物传感器信号，目前正在采集样本。">The Nanjing project studies biosensor signals associated with kidney disease. Sample collection is underway.</p>
         </header>
         <dl class="pipeline-notes">
@@ -1258,7 +1284,7 @@
       </article>
       <article class="pipeline-detail" data-subview="parkinsons-disease" hidden>
         <header class="interior-heading">
-          <h1 data-zh="帕金森病">Parkinson’s disease</h1>
+          <h1 tabindex="-1" data-zh="帕金森病">Parkinson’s disease</h1>
           <p data-zh="在芬兰图尔库开发的噬菌体生物传感器已被选中，用于在中国成都规模更大的独立队列中测试。">Phage biosensors developed in Turku, Finland, were selected for testing in a larger, independent cohort in Chengdu, China.</p>
         </header>
         <dl class="pipeline-notes">
@@ -1280,7 +1306,7 @@
       </article>
       <article class="pipeline-detail" data-subview="lung-cancer" hidden>
         <header class="interior-heading">
-          <h1 data-zh="肺癌">Lung cancer</h1>
+          <h1 tabindex="-1" data-zh="肺癌">Lung cancer</h1>
           <p data-zh="肺癌项目研究与肺癌相关的生物传感器信号，由上海和成都的研究团队参与。">The lung cancer project investigates biosensor signals associated with lung cancer. The research involves teams in Shanghai and Chengdu.</p>
         </header>
         <dl class="pipeline-notes">
@@ -1291,7 +1317,7 @@
       </article>
       <article class="pipeline-detail" data-subview="prostate-cancer" hidden>
         <header class="interior-heading">
-          <h1 data-zh="前列腺癌">Prostate cancer</h1>
+          <h1 tabindex="-1" data-zh="前列腺癌">Prostate cancer</h1>
           <p data-zh="这项研究旨在开发利用尿液样本检测前列腺癌的生物传感器。研究团队在芬兰使用赫尔辛基大学医院提供的样本研究传感器信号，并将筛选出的候选传感器推进至临床前验证，验证在南京江苏省肿瘤医院的中国队列中开展。">The research develops urine-based biosensors for prostate cancer detection. Biosensor signals were studied in Finland using samples from Helsinki University Hospital. Selected biosensor candidates were taken forward to pre-clinical validation in a Chinese cohort at Jiangsu Cancer Hospital in Nanjing.</p>
         </header>
         <dl class="pipeline-notes">
@@ -1302,7 +1328,7 @@
       </article>
       <article class="pipeline-detail" data-subview="metastatic-cancers" hidden>
         <header class="interior-heading">
-          <h1 data-zh="转移性癌症">Metastatic cancers</h1>
+          <h1 tabindex="-1" data-zh="转移性癌症">Metastatic cancers</h1>
           <p data-zh="这项研究探索如何利用尿液样本检测不同类型的转移性癌症。样本采集和研究正在图尔库和南京开展。">The research focuses on detecting different metastatic cancers from urine samples. The sample collection and research is being conducted in Turku and Nanjing.</p>
         </header>
         <dl class="pipeline-notes">
@@ -1313,7 +1339,7 @@
       </article>
       <article class="pipeline-detail" data-subview="organ-transplantation" hidden>
         <header class="interior-heading">
-          <h1 data-zh="器官移植">Organ transplantation</h1>
+          <h1 tabindex="-1" data-zh="器官移植">Organ transplantation</h1>
           <p data-zh="这项研究使用尿液、唾液和血浆样本，比较肺移植后出现慢性肺移植物功能障碍（CLAD）与未出现 CLAD 两种情况下的噬菌体生物传感器信号。">The current research focuses on studying phage biosensor signals associated with chronic lung allograft dysfunction (CLAD) and non-CLAD after lung transplantation, using urine, saliva and plasma samples.</p>
         </header>
         <dl class="pipeline-notes">
@@ -1324,7 +1350,7 @@
       </article>
       <article class="pipeline-detail" data-subview="tuberculosis" hidden>
         <header class="interior-heading">
-          <h1 data-zh="结核病">Tuberculosis</h1>
+          <h1 tabindex="-1" data-zh="结核病">Tuberculosis</h1>
           <p data-zh="项目与上海市公共卫生临床中心共同研究结核病相关的生物传感器信号。">The project studies biosensor signals associated with tuberculosis in collaboration with the Shanghai Public Health Clinical Center.</p>
         </header>
         <dl class="pipeline-notes">
@@ -1335,7 +1361,7 @@
       </article>
       <article class="pipeline-detail" data-subview="sepsis" hidden>
         <header class="interior-heading">
-          <h1 data-zh="脓毒症">Sepsis</h1>
+          <h1 tabindex="-1" data-zh="脓毒症">Sepsis</h1>
           <p data-zh="项目在孟买的 Max Nanavati Hospital 研究脓毒症相关的生物传感器信号。">The sepsis project studies disease-associated biosensor signals at Max Nanavati Hospital in Mumbai.</p>
         </header>
         <dl class="pipeline-notes">
@@ -1745,7 +1771,10 @@
       target.scrollIntoView({ block: "start", behavior: "instant" });
       return;
     }
-    if (focus) main.focus({ preventScroll: true });
+    if (focus) {
+      const heading = route.page === "projects" && page.querySelector(".pipeline-detail:not([hidden]) h1");
+      (heading || main).focus({ preventScroll: true });
+    }
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     if (focus && !["home", "projects", "technology", "evidence"].includes(route.page)) {
       const entrance = route.view ? page.querySelector(`[data-subview="${route.view}"]`) : (page.querySelector(".interior-content") || page);
@@ -1766,6 +1795,20 @@
   companyContactLink.addEventListener("click", () => {
     if (location.hash === companyContactLink.hash) showRoute({ focus: true });
   });
+  const pipelineMenu = document.querySelector(".pipeline-menu-toggle");
+  const pipelineLinks = document.getElementById("pipeline-links");
+  const closePipelineMenu = () => pipelineMenu.setAttribute("aria-expanded", "false");
+  pipelineMenu.addEventListener("click", () => {
+    pipelineMenu.setAttribute("aria-expanded", String(pipelineMenu.getAttribute("aria-expanded") === "false"));
+  });
+  pipelineLinks.addEventListener("click", event => {
+    const link = event.target.closest("a");
+    if (link && pipelineMenu.getClientRects().length && link.hash === location.hash) {
+      closePipelineMenu();
+      pipelineMenu.focus();
+    }
+  });
+  window.addEventListener("hashchange", closePipelineMenu);
   showRoute();
 
   document.querySelector(".skip").addEventListener("click", event => {
